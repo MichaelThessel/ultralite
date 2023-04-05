@@ -20,7 +20,7 @@ enum programStates {
 int programRead;
 int programPrev = HIGH;
 unsigned long programPrevTime = 0;
-const unsigned long programDebounceDelay = 50;
+const unsigned long programDebounceDelay = 500;
 programStates programState = PROGRAM_UNSET;
 
 // Set up default program
@@ -31,7 +31,7 @@ uint8_t defaultProgramMaxStep = 60;
 
 // Set up blower
 void setupBlower() {
-    Timer1.initialize(40);
+    Timer1.initialize(1000);
 
     pinMode(PIN_PROGRAM, INPUT_PULLUP);
     pinMode(PIN_STATUS, OUTPUT);
@@ -93,14 +93,14 @@ void runDefaultProgram() {
         return NULL;
     }
 
-    if (millis() - defaultProgramPrevTime > defaultProgramInterval) {
+    if (millis() - defaultProgramPrevTime >= defaultProgramInterval) {
         defaultProgramPrevTime = millis();
         defaultProgramStep++;
     } else {
         return NULL;
     }
 
-    if (defaultProgramStep >= defaultProgramMaxStep) {
+    if (defaultProgramStep == defaultProgramMaxStep) {
         DPRINTLN("Default program complete");
         setProgram(PROGRAM_4);
         return NULL;
