@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include <TimerOne.h>
-#include <string.h>
 
 #include "debug.h"
 #include "pins.h"
@@ -33,14 +32,14 @@ uint8_t defaultProgramMaxStep = 60;
 void setupBlower() {
     Timer1.initialize(1000);
 
-    pinMode(PIN_PROGRAM, INPUT_PULLUP);
-    pinMode(PIN_STATUS, OUTPUT);
+    pinMode(PIN_BLOWER_PROGRAM, INPUT_PULLUP);
+    pinMode(PIN_BLOWER_STATUS, OUTPUT);
     pinMode(PIN_BLOWER, OUTPUT);
 }
 
 // Set blower PWM
 void setBlower(float dutyCycle, bool statusLed) {
-    digitalWrite(PIN_STATUS, statusLed ? HIGH : LOW);
+    digitalWrite(PIN_BLOWER_STATUS, statusLed ? HIGH : LOW);
     Timer1.pwm(PIN_BLOWER, dutyCycle / 100 * 1023);
 }
 
@@ -111,7 +110,7 @@ void runDefaultProgram() {
 
 // Read program button press and set program accordingly
 void processProgramButtonPress() {
-    programRead = digitalRead(PIN_PROGRAM);
+    programRead = digitalRead(PIN_BLOWER_PROGRAM);
 
     // Debounce program button
     if (programRead == programPrev || millis() - programPrevTime < programDebounceDelay) {

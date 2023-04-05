@@ -1,5 +1,6 @@
 #include "debug.h"
 #include "blower.h"
+#include "battery.h"
 
 // ##################################
 // Setup
@@ -10,8 +11,10 @@ void setup() {
     #endif
 
     setupBlower();
+    setupBattery();
 
     DPRINTLN("Setup complete");
+
 }
 
 // ##################################
@@ -20,4 +23,5 @@ void setup() {
 void loop() {
     processProgramButtonPress();
     runDefaultProgram();
+    monitorBattery();
 }
