@@ -33,13 +33,11 @@ void setupBlower() {
     Timer1.initialize(1000);
 
     pinMode(PIN_BLOWER_PROGRAM, INPUT_PULLUP);
-    pinMode(PIN_BLOWER_STATUS, OUTPUT);
     pinMode(PIN_BLOWER, OUTPUT);
 }
 
 // Set blower PWM
-void setBlower(float dutyCycle, bool statusLed) {
-    digitalWrite(PIN_BLOWER_STATUS, statusLed ? HIGH : LOW);
+void setBlower(float dutyCycle) {
     Timer1.pwm(PIN_BLOWER, dutyCycle / 100 * 1023);
 }
 
@@ -53,19 +51,19 @@ void setProgram(programStates state) {
         DPRINTLN("Program: Default");
     } else if (programState == PROGRAM_1) {
         DPRINTLN("Program: 1");
-        setBlower(25, true);
+        setBlower(25);
     } else if (programState == PROGRAM_2) {
         DPRINTLN("Program: 2");
-        setBlower(50, true);
+        setBlower(50);
     } else if (programState == PROGRAM_3) {
         DPRINTLN("Program: 3");
-        setBlower(75, true);
+        setBlower(75);
     } else if (programState == PROGRAM_4) {
         DPRINTLN("Program: 4");
-        setBlower(100, true);
+        setBlower(100);
     } else if (programState == PROGRAM_OFF) {
         DPRINTLN("Program: Off");
-        setBlower(0, false);
+        setBlower(0);
     }
 }
 
@@ -105,7 +103,7 @@ void runDefaultProgram() {
         return NULL;
     }
 
-    setBlower(defaultProgramStep / defaultProgramMaxStep * 100, true);
+    setBlower(defaultProgramStep / defaultProgramMaxStep * 100);
 }
 
 // Read program button press and set program accordingly
