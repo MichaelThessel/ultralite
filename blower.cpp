@@ -105,7 +105,7 @@ void runDefaultProgram() {
         return NULL;
     }
 
-    setBlower(100 / defaultProgramMaxStep * defaultProgramStep, true);
+    setBlower(defaultProgramStep / defaultProgramMaxStep * 100, true);
 }
 
 // Read program button press and set program accordingly
