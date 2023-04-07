@@ -11,8 +11,7 @@ enum programStates {
     PROGRAM_1,
     PROGRAM_2,
     PROGRAM_3,
-    PROGRAM_4,
-    PROGRAM_OFF
+    PROGRAM_4
 };
 
 // Variables for debouncing the program button
@@ -61,9 +60,6 @@ void setProgram(programStates state) {
     } else if (programState == PROGRAM_4) {
         DPRINTLN("Program: 4");
         setBlower(100);
-    } else if (programState == PROGRAM_OFF) {
-        DPRINTLN("Program: Off");
-        setBlower(0);
     }
 }
 
@@ -71,7 +67,7 @@ void setProgram(programStates state) {
 void setNextProgramState() {
     if (programState == PROGRAM_UNSET) {
         setProgram(PROGRAM_DEFAULT);
-    } else if (programState == PROGRAM_DEFAULT || programState == PROGRAM_OFF) {
+    } else if (programState == PROGRAM_DEFAULT || programState == PROGRAM_4) {
         setProgram(PROGRAM_1);
     } else if (programState == PROGRAM_1) {
         setProgram(PROGRAM_2);
@@ -79,8 +75,6 @@ void setNextProgramState() {
         setProgram(PROGRAM_3);
     } else if (programState == PROGRAM_3) {
         setProgram(PROGRAM_4);
-    } else if (programState == PROGRAM_4) {
-        setProgram(PROGRAM_OFF);
     }
 }
 
